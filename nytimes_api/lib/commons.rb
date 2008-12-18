@@ -5,7 +5,7 @@ module NYTimes
 
     attr_reader :errors
     
-        
+    
     # Default response format (xml / json)
     # Can be replaced via parameter
     FORMAT_DEFAULT = "xml"
@@ -25,6 +25,12 @@ module NYTimes
       config = YAML.load_file(File.dirname(__FILE__) + "/nytimes.yml")['api_key']
       return config['community']
     end
+
+    def timestags_key
+      config = YAML.load_file(File.dirname(__FILE__) + "/nytimes.yml")['api_key']
+      return config['times_tags']
+    end
+
 
 
     def add_error message

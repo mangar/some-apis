@@ -125,9 +125,6 @@ module NYTimes
     end
     
 
-
-   
-   
    private 
       
    # Process the url and handle XML returned by the nytimes service.
