@@ -69,8 +69,6 @@ module NYTimes
     # Comments by Date
     # To retrieve comments posted on a specific date    
     def by_date(date, par = {})
-
-      # date = par[:date]
       url_temp = "#{BASE_URL}#{VERSION}/comments/by-date/#{date}.#{format_default(par)}"
       
       parameters = Hash.new
@@ -82,12 +80,28 @@ module NYTimes
       url = SomeAPI::Common.parse_url({:param => parameters, 
                                        :url => url_temp,
                                        :add => add,
-                                       :remove => [:format, :date]})
+                                       :remove => [:format]})
 
       return process_return(url, format_default(par))
     end
-    
-    def comments_by_user in_userid
+
+    # Comments by User ID
+    # To retrieve comments by a specific NYTimes.com use    
+    def by_user(user_id, par = {})
+      url_temp = "#{BASE_URL}#{VERSION}/comments/user/id/#{user_id}.#{format_default(par)}"
+      
+      parameters = Hash.new
+      parameters.merge!(par)
+      
+      add = Hash.new
+      add["api-key"] = community_key
+      
+      url = SomeAPI::Common.parse_url({:param => parameters, 
+                                       :url => url_temp,
+                                       :add => add,
+                                       :remove => [:format]})
+
+      return process_return(url, format_default(par))
     end
     
     def comments_by_url in_url
