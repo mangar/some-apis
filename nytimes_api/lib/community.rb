@@ -103,8 +103,25 @@ module NYTimes
 
       return process_return(url, format_default(par))
     end
-    
-    def comments_by_url in_url
+
+    # Comments by URL
+    # To retrieve comments associated with a specific NYTimes.com URL    
+    def by_url(match_type, url, par = {})
+      url_temp = "#{BASE_URL}#{VERSION}/comments/url/#{match_type}.#{format_default(par)}"
+      
+      parameters = Hash.new
+      parameters.merge!(par) unless (par.nil?)
+      parameters[:url] = url
+      
+      add = Hash.new
+      add["api-key"] = community_key
+      
+      url = SomeAPI::Common.parse_url({:param => parameters, 
+                                       :url => url_temp,
+                                       :add => add,
+                                       :remove => [:format]})
+
+      return process_return(url, format_default(par))      
     end
     
 
@@ -128,7 +145,7 @@ module NYTimes
            
        header[:status] = doc.root.elements["status"].text
        header[:copyright] = doc.root.elements["copyright"].text
-       header[:num_results] = doc.root.elements["results/totalCommentsReturned"].text
+       header[:num_results] = doc.root.elements["results/totalCommentsReturned"].text if (doc.root.elements["results/totalCommentsReturned"] != nil)
          
        # data...
        records = Array.new

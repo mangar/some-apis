@@ -12,7 +12,7 @@ module NYTimes
 
 
     def format_default par
-      return (par.key?(:format) ? par[:format] : FORMAT_DEFAULT)
+      return (par.nil? ? FORMAT_DEFAULT : (par.key?(:format) ? par[:format] : FORMAT_DEFAULT))
     end
 
 
