@@ -24,9 +24,28 @@ module NYTimes
     # API version
     VERSION = "v2/"
   
-
+    # Random Comments
+    # To retrieve a random set of user comments
     def random(par = {})
+      url_temp = "#{BASE_URL}#{VERSION}/comments/random.#{format_default(par)}"
       
+      parameters = Hash.new
+      parameters.merge!(par)
+      
+      add = Hash.new
+      add["api-key"] = community_key
+      
+      url = SomeAPI::Common.parse_url({:param => parameters, 
+                                       :url => url_temp,
+                                       :add => add,
+                                       :remove => [:format]})
+
+      return process_return(url, format_default(par))
+    end
+
+    # Recent Comments
+    # To retrieve the most recent user comments
+    def recent(par = {})
       url_temp = "#{BASE_URL}#{VERSION}/comments/recent.#{format_default(par)}"
       
       parameters = Hash.new
@@ -45,11 +64,27 @@ module NYTimes
                                        :remove => [:format]})
 
       return process_return(url, format_default(par))
-      
-      
     end
-    
-    def comments_by_date in_date
+
+    # Comments by Date
+    # To retrieve comments posted on a specific date    
+    def by_date(date, par = {})
+
+      # date = par[:date]
+      url_temp = "#{BASE_URL}#{VERSION}/comments/by-date/#{date}.#{format_default(par)}"
+      
+      parameters = Hash.new
+      parameters.merge!(par)
+      
+      add = Hash.new
+      add["api-key"] = community_key
+      
+      url = SomeAPI::Common.parse_url({:param => parameters, 
+                                       :url => url_temp,
+                                       :add => add,
+                                       :remove => [:format, :date]})
+
+      return process_return(url, format_default(par))
     end
     
     def comments_by_user in_userid
@@ -59,30 +94,7 @@ module NYTimes
     end
     
 
-    # Recent Comments
-    # To retrieve the most recent user comments
-    def recent(par = {})
 
-      url_temp = "#{BASE_URL}#{VERSION}/comments/recent.#{format_default(par)}"
-      
-      parameters = Hash.new
-      parameters.merge!(par)
-      
-      translate = Hash.new
-      translate[:force_replies] = "force-replies"
-
-      add = Hash.new
-      add["api-key"] = community_key
-      
-      url = SomeAPI::Common.parse_url({:param => parameters, 
-                                       :url => url_temp,
-                                       :add => add,
-                                       :key_param_translation => translate,
-                                       :remove => [:format]})
-
-      return process_return(url, format_default(par))
-      
-    end    
    
    
    private 
