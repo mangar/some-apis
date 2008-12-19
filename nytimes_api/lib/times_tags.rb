@@ -58,11 +58,9 @@ module NYTimes
                                        :url => url_temp,
                                        :add => add})
 
-
       return process_return(url)
     end
 
- 
 
    private 
       
