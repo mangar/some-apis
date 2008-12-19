@@ -40,9 +40,9 @@ Get your API-Key and past it into .yml file for specific API that you have inten
 	blip = Blipfm::UserProfile.new
 	records, header = blip.user_profile("marciogarcia")
 
-###Yahoo!
+##Yahoo!
 
-##Boss
+###Boss
 
 _*Soon / Roadmap..._
 
